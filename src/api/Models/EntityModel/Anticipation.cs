@@ -5,6 +5,11 @@ namespace api.Models.EntityModel
 {
     public class Anticipation
     {
+        public Anticipation()
+        {
+            AnticipationItems = new List<AnticipationItem>();
+        }
+
         public long Id { get; set; }
         public DateTime? AnalyzeDate { get; set; }
         public long AnticipationStatusId { get; set; }

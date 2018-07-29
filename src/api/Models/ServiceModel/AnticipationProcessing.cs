@@ -20,6 +20,14 @@ namespace api.Models.ServiceModel
         {
             Anticipation = model.Map();
 
+            foreach (var item in model.Transactions)
+            {
+                Anticipation.AnticipationItems.Add(new AnticipationItem {
+                     AnticipationId = Anticipation.Id,
+                     TransactionId = item.Id
+                });
+            }
+
             _dbContext.Add(Anticipation);
 
             return await _dbContext.SaveChangesAsync() > 0;

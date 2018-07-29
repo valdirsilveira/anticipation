@@ -13,10 +13,16 @@ namespace api.Models.EntityModel
 
             entity.Property(a => a.Id).ValueGeneratedOnAdd();
             entity.Property(a => a.AnticipationId).HasColumnName("AntecipacaoId").IsRequired();
+            entity.Property(a => a.TransactionId).HasColumnName("TransacaoId").IsRequired();
 
             entity.HasOne(a => a.Anticipation)
                         .WithMany(a => a.AnticipationItems)
                         .HasForeignKey(a => a.AnticipationId)
+                        .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(a => a.Transaction)
+                        .WithMany()
+                        .HasForeignKey(a => a.TransactionId)
                         .OnDelete(DeleteBehavior.Restrict);
         }
     }

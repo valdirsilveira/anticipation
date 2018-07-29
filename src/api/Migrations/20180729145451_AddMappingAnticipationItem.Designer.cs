@@ -10,8 +10,8 @@ using api.Infrastructure;
 namespace api.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20180729143509_RenameTableAnticipationItems")]
-    partial class RenameTableAnticipationItems
+    [Migration("20180729145451_AddMappingAnticipationItem")]
+    partial class AddMappingAnticipationItem
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -62,13 +62,19 @@ namespace api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("AnticipationId");
+                    b.Property<long>("AnticipationId")
+                        .HasColumnName("AntecipacaoId");
+
+                    b.Property<long>("TransactionId")
+                        .HasColumnName("TransacaoId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AnticipationId");
 
-                    b.ToTable("AnticipationItem");
+                    b.HasIndex("TransactionId");
+
+                    b.ToTable("antecipacaoitens");
                 });
 
             modelBuilder.Entity("api.Models.EntityModel.AnticipationStatus", b =>
@@ -131,7 +137,12 @@ namespace api.Migrations
                     b.HasOne("api.Models.EntityModel.Anticipation", "Anticipation")
                         .WithMany("AnticipationItems")
                         .HasForeignKey("AnticipationId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("api.Models.EntityModel.Transaction", "Transaction")
+                        .WithMany()
+                        .HasForeignKey("TransactionId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

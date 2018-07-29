@@ -16,8 +16,9 @@ namespace api.Infrastructure
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Anticipation>().Map();
+            builder.Entity<AnticipationItem>().Map();
             builder.Entity<AnticipationStatus>().Map();
-            builder.Entity<Transaction>().Map();
+            builder.Entity<Transaction>().Map();            
         }
     }
 }
