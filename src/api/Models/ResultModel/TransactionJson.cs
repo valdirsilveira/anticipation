@@ -1,8 +1,8 @@
-﻿using api.Models.EntityModel;
+﻿using api.Extensions;
+using api.Models.EntityModel;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-
 
 namespace api.Models.ResultModel
 {
@@ -17,8 +17,8 @@ namespace api.Models.ResultModel
             CreatedAt = transaction.CreatedAt;
             Installments = transaction.Installments;
             TransferDate = transaction.TransferDate;
-            TransactionAmount = transaction.TransactionAmount;
-            TransferAmount = transaction.TransferAmount;
+            TransactionAmount = transaction.TransactionAmount.ToCurrency();
+            TransferAmount = ((decimal)transaction.TransferAmount).ToCurrency();
         }
 
         public long Id { get; set; }
