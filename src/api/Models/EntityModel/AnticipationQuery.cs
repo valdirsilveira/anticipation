@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using api.Enums;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
@@ -38,6 +39,13 @@ namespace api.Models.EntityModel
         public static IQueryable<Anticipation> WhereId(this IQueryable<Anticipation> anticipations, long anticipationId)
         {
             return anticipations.Where(anticipation => anticipation.Id == anticipationId);
+        }
+        #endregion
+
+        #region WhereInProgress
+        public static IQueryable<Anticipation> WhereInProgress(this IQueryable<Anticipation> anticipations)
+        {
+            return anticipations.Where(anticipation => anticipation.AnticipationStatusId != (int) AnticipationStatusEnum.Finished);
         }
         #endregion[
 

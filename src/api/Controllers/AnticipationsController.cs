@@ -22,6 +22,27 @@ namespace api.Controllers
         }
 
         /// <summary>
+        /// Consultar os detalhes da solicitação em andamento
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [ProducesResponseType(200, Type = typeof(AnticipationJson))]
+        [HttpGet, Route("in-progress")]
+        public async Task<IActionResult> FindInProgress()
+        {
+            var anticipation = await _dbContext.Anticipations
+                 .WhereInProgress()
+                 .SingleOrDefaultAsync();
+
+            if(anticipation == null)
+            {
+                return NotFound();
+            }
+
+            return new AnticipationJson(anticipation);
+        }
+
+        /// <summary>
         /// Consultar histórico das solicitações realizadas em um determinado período
         /// </summary>
         /// <param name="model"></param>
