@@ -14,7 +14,7 @@ namespace api.Models.ServiceModel
             _dbContext = dbContext;
         }
 
-        public Anticipation Anticipation { get; set; }
+        public Anticipation Anticipation { get; private set; }
 
         public async Task<bool> Process(RequestAnticipationModel model)
         {

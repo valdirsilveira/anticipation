@@ -25,7 +25,7 @@ namespace api.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [ProducesResponseType(200, Type = typeof(TransactionListJson))]
+        [ProducesResponseType(200, Type = typeof(AnticipationJson))]
         [HttpPost, Route("request-anticipation")]
         public async Task<IActionResult> RequestAnticipation(RequestAnticipationModel model)
         {
@@ -36,7 +36,7 @@ namespace api.Controllers
                 return BadRequest();
             }
 
-            return Ok();
+            return new AnticipationJson(anticipationProcessing.Anticipation);
         }
     }
 }
