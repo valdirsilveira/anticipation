@@ -73,8 +73,8 @@ namespace api.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [ProducesResponseType(200, Type = typeof(AnticipationJson))]
-        [HttpPost, Route("request-anticipation")]
-        public async Task<IActionResult> RequestAnticipation([FromBody] RequestAnticipationModel model)
+        [HttpPost, Route("")]
+        public async Task<IActionResult> Add([FromBody] RequestAnticipationModel model)
         {
             var anticipationProcessing = new AnticipationProcessing(_dbContext);
 
