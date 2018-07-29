@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 
 namespace api.Models.EntityModel
@@ -16,6 +17,20 @@ namespace api.Models.EntityModel
         public static IQueryable<Anticipation> IncludeAnticipationStatus(this IQueryable<Anticipation> anticipations)
         {
             return anticipations.Include(anticipation => anticipation.AnticipationStatusId);
+        }
+        #endregion
+
+        #region WhereDateFrom
+        public static IQueryable<Anticipation> WhereDateFrom(this IQueryable<Anticipation> anticipations, DateTime startDate)
+        {
+            return anticipations.Where(anticipation => anticipation.CreatedAt.Date >= startDate.Date);
+        }
+        #endregion
+
+        #region WhereDateUntil
+        public static IQueryable<Anticipation> WhereDateUntil(this IQueryable<Anticipation> anticipations, DateTime endDate)
+        {
+            return anticipations.Where(anticipation => anticipation.CreatedAt.Date <= endDate.Date);
         }
         #endregion
 

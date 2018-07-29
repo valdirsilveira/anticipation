@@ -12,13 +12,6 @@ namespace api.Models.EntityModel
         }
         #endregion
 
-        #region WhereDateFrom
-        public static IQueryable<Transaction> WhereDateFrom(this IQueryable<Transaction> transactions, DateTime startDate)
-        {
-            return transactions.Where(transaction => transaction.CreatedAt.Date >= startDate.Date);
-        }
-        #endregion
-
         #region WhereAvailableAnticipation
         public static IQueryable<Transaction> WhereAvailableAnticipation(this IQueryable<Transaction> transactions)
         {
@@ -34,11 +27,18 @@ namespace api.Models.EntityModel
                     Installments = t.Installments,
                     TransferDate = t.TransferDate,
                     TransactionAmount = t.TransactionAmount,
-                    TransferAmount = t.TransactionAmount - ((((decimal) 3.8 / 100) * (t.TransactionAmount/ t.Installments)) * t.Installments)
+                    TransferAmount = t.TransactionAmount - ((((decimal)3.8 / 100) * (t.TransactionAmount / t.Installments)) * t.Installments)
                 });
         }
         #endregion
 
+        #region WhereDateFrom
+        public static IQueryable<Transaction> WhereDateFrom(this IQueryable<Transaction> transactions, DateTime startDate)
+        {
+            return transactions.Where(transaction => transaction.CreatedAt.Date >= startDate.Date);
+        }
+        #endregion
+        
         #region WhereDateUntil
         public static IQueryable<Transaction> WhereDateUntil(this IQueryable<Transaction> transactions, DateTime endDate)
         {

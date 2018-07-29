@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Infrastructure;
 
 namespace api.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180729145158_AddColumnTransactionIdOnAnticipationItemTable")]
+    partial class AddColumnTransactionIdOnAnticipationItemTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,11 +62,9 @@ namespace api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("AnticipationId")
-                        .HasColumnName("AntecipacaoId");
+                    b.Property<long>("AnticipationId");
 
-                    b.Property<long>("TransactionId")
-                        .HasColumnName("TransacaoId");
+                    b.Property<long>("TransactionId");
 
                     b.HasKey("Id");
 
@@ -72,7 +72,7 @@ namespace api.Migrations
 
                     b.HasIndex("TransactionId");
 
-                    b.ToTable("antecipacaoitens");
+                    b.ToTable("AnticipationItem");
                 });
 
             modelBuilder.Entity("api.Models.EntityModel.AnticipationStatus", b =>
@@ -135,12 +135,12 @@ namespace api.Migrations
                     b.HasOne("api.Models.EntityModel.Anticipation", "Anticipation")
                         .WithMany("AnticipationItems")
                         .HasForeignKey("AnticipationId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("api.Models.EntityModel.Transaction", "Transaction")
                         .WithMany()
                         .HasForeignKey("TransactionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
