@@ -76,6 +76,15 @@ namespace api.Controllers
         [HttpPost, Route("")]
         public async Task<IActionResult> Add([FromBody] RequestAnticipationModel model)
         {
+            var anticipation = await _dbContext.Anticipations
+                .WhereInProgress()
+                .SingleOrDefaultAsync();
+
+            if (anticipation != null)
+            {
+                return new AnticipationAlreadyInProgress(anticipation);
+            }
+
             var anticipationProcessing = new AnticipationProcessing(_dbContext);
 
             if (!await anticipationProcessing.Process(model))
