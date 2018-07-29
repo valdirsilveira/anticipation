@@ -7,7 +7,7 @@ namespace api.Models.EntityModel
     {
         public static void Map(this EntityTypeBuilder<AnticipationStatus> entity)
         {
-            entity.ToTable("AntecipacaoStatus");
+            entity.ToTable("antecipacaostatus");
 
             entity.HasKey(a => a.Id);
 

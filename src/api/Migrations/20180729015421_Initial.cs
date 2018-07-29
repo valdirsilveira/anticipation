@@ -9,7 +9,7 @@ namespace api.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AntecipacaoStatus",
+                name: "antecipacaostatus",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
