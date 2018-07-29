@@ -57,8 +57,8 @@ namespace api.Controllers
 
             var anticipations = await anticipationQuery
                 .OrderByDescendingCreatedAt()
-                .Skip(model.Index.Value)
-                .Take(model.Length.Value)
+                .Skip(model.Index)
+                .Take(model.Length)
                 .ToListAsync();
 
             var periodRequestedAmount = await anticipationQuery.SumAsync(anticipation => anticipation.RequestedAmount);
