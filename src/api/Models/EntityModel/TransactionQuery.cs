@@ -1,4 +1,5 @@
-﻿using System;
+﻿using api.Extensions;
+using System;
 using System.Linq;
 
 namespace api.Models.EntityModel
@@ -27,7 +28,7 @@ namespace api.Models.EntityModel
                     Installments = t.Installments,
                     TransferDate = t.TransferDate,
                     TransactionAmount = t.TransactionAmount,
-                    TransferAmount = t.TransactionAmount - ((((decimal)3.8 / 100) * (t.TransactionAmount / t.Installments)) * t.Installments)
+                    TransferAmount = t.TransactionAmount.CalculateTransactionFees(t.Installments)
                 });
         }
         #endregion
