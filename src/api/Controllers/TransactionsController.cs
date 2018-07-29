@@ -19,6 +19,12 @@ namespace api.Controllers
             _dbContext = dbContext;
         }
 
+        /// <summary>
+        /// Consultar transações disponíveis para antecipar
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [ProducesResponseType(200, Type = typeof(TransactionListJson))]
         [HttpGet, Route("available-anticipation")]
         public async Task<IActionResult> ListAvailableAnticipation([FromQuery] TransactionListModel model)
         {

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace api
 {
@@ -23,6 +24,10 @@ namespace api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<ApiDbContext>(options =>
                             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v2", new Info { Title = "Anticipation", Version = "v2" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -31,6 +36,12 @@ namespace api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v2/swagger.json", "Anticipation API V2");
+                    c.RoutePrefix = "api/v2/docs";
+                });
             }
             else
             {
@@ -38,7 +49,10 @@ namespace api
             }
 
             app.UseHttpsRedirection();
+
             app.UseMvc();
+
+            app.UseSwagger();
         }
     }
 }
