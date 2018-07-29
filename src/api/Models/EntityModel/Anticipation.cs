@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace api.Models.EntityModel
 {
@@ -11,6 +12,8 @@ namespace api.Models.EntityModel
         public AnticipationStatus AnticipationStatus { get; set; }
         public DateTime CreatedAt { get; set; }
         public decimal RequestedAmount { get; set; }
-        public decimal TransferAmount { get; set; }      
+        public decimal TransferAmount { get; set; }
+
+        public ICollection<AnticipationItem> AnticipationItems { get; set; }
     }
 }
