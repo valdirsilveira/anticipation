@@ -43,12 +43,6 @@ namespace api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v2/swagger.json", "Anticipation API V2");
-                    c.RoutePrefix = "api/v2/docs";
-                });
             }
             else
             {
