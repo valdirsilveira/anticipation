@@ -18,7 +18,8 @@ namespace api.Models.ResultModel
             Installments = transaction.Installments;
             TransferDate = transaction.TransferDate;
             TransactionAmount = transaction.TransactionAmount.ToCurrency();
-            TransferAmount = ((decimal)transaction.TransferAmount).ToCurrency();
+            TransferAmount = (transaction.TransferAmount != null) ?
+                ((decimal)transaction.TransferAmount).ToCurrency() : (decimal) 0.0;                
         }
 
         public long Id { get; set; }

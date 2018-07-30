@@ -20,13 +20,33 @@ namespace api.Controllers
         }
 
         /// <summary>
+        /// Consulta uma transação
+        /// </summary>
+        /// <param name="transactionId"></param>
+        /// <returns></returns>
+        [ProducesResponseType(200, Type = typeof(TransactionListJson))]
+        [HttpGet, Route("{transactionId:long}")]
+        public async Task<IActionResult> Find([FromRoute] long transactionId)
+        {
+            var transaction = await _dbContext.Transactions
+                 .WhereId(transactionId)
+                 .SingleOrDefaultAsync();
+
+            if (transaction == null)
+            {
+                return NotFound();
+            }
+
+            return new TransactionJson(transaction);
+        }
+
+        /// <summary>
         /// Consultar transações disponíveis para antecipar
         /// </summary>
-        /// <param name="model"></param>
         /// <returns></returns>
         [ProducesResponseType(200, Type = typeof(TransactionListJson))]
         [HttpGet, Route("available-anticipation")]
-        public async Task<IActionResult> ListAvailableAnticipation([FromQuery] TransactionListModel model)
+        public async Task<IActionResult> ListAvailableAnticipation()
         {
             var transactionQuery = _dbContext.Transactions
                 .WhereAvailableAnticipation();
