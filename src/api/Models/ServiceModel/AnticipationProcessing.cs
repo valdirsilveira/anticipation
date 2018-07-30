@@ -1,7 +1,9 @@
-﻿using api.Extensions;
+﻿using api.Enums;
+using api.Extensions;
 using api.Infrastructure;
 using api.Models.EntityModel;
 using api.Models.ViewModel;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace api.Models.ServiceModel
@@ -18,6 +20,19 @@ namespace api.Models.ServiceModel
         }
 
         public Anticipation Anticipation { get; private set; }
+
+        public async Task<bool> StartAnalysis(AnticipationModel model)
+        {
+            Anticipation = await _dbContext.Anticipations
+                 .WhereId(model.Id)
+                 .SingleOrDefaultAsync();
+
+            Anticipation.AnticipationStatusId = (int)AnticipationStatusEnum.Analyzing;
+
+            _dbContext.Update(Anticipation);
+
+            return await _dbContext.SaveChangesAsync() > 0;
+        }
 
         public async Task<bool> Process(RequestAnticipationModel model)
         {

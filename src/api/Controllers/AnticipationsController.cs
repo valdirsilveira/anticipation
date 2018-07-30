@@ -22,6 +22,34 @@ namespace api.Controllers
         }
 
         /// <summary>
+        /// Solicitar antecipação de transações selecionadas
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [ProducesResponseType(200, Type = typeof(AnticipationJson))]
+        [HttpPost, Route("")]
+        public async Task<IActionResult> Add([FromBody] RequestAnticipationModel model)
+        {
+            var anticipation = await _dbContext.Anticipations
+                .WhereInProgress()
+                .SingleOrDefaultAsync();
+
+            if (anticipation != null)
+            {
+                return new AnticipationAlreadyInProgress(anticipation);
+            }
+
+            var anticipationProcessing = new AnticipationProcessing(_dbContext);
+
+            if (!await anticipationProcessing.Process(model))
+            {
+                return BadRequest();
+            }
+
+            return new AnticipationJson(anticipationProcessing.Anticipation);
+        }
+
+        /// <summary>
         /// Consultar os detalhes da solicitação em andamento
         /// </summary>
         /// <param name="model"></param>
@@ -68,26 +96,17 @@ namespace api.Controllers
         }
 
         /// <summary>
-        /// Solicitar antecipação de transações selecionadas
+        /// Iniciar a analise de uma antecipação
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [ProducesResponseType(200, Type = typeof(AnticipationJson))]
-        [HttpPost, Route("")]
-        public async Task<IActionResult> Add([FromBody] RequestAnticipationModel model)
+        [HttpPatch, Route("start-analysis")]
+        public async Task<IActionResult> StartAnalysis([FromBody] AnticipationModel model)
         {
-            var anticipation = await _dbContext.Anticipations
-                .WhereInProgress()
-                .SingleOrDefaultAsync();
-
-            if (anticipation != null)
-            {
-                return new AnticipationAlreadyInProgress(anticipation);
-            }
-
             var anticipationProcessing = new AnticipationProcessing(_dbContext);
 
-            if (!await anticipationProcessing.Process(model))
+            if (!await anticipationProcessing.StartAnalysis(model))
             {
                 return BadRequest();
             }

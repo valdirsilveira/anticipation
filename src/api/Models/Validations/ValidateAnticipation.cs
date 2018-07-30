@@ -5,20 +5,20 @@ using System.Linq;
 
 namespace api.Models.Validations
 {
-    public class ValidateTransaction : ValidationAttribute
+    public class ValidateAnticipation : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var context = (ApiDbContext)validationContext
                          .GetService(typeof(ApiDbContext));
 
-            var transaction = context.Transactions
+            var anticipation = context.Anticipations
                  .WhereId((long)value)
                  .SingleOrDefault();
 
-            if (transaction == null)
+            if (anticipation == null)
             {
-                return new ValidationResult("Transaction does not exist");
+                return new ValidationResult("Anticipation does not exist");
             }
 
             return ValidationResult.Success;
