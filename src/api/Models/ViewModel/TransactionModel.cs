@@ -7,6 +7,7 @@ namespace api.Models.ViewModel
     public class TransactionModel
     {
         [Display(Name = "Id")]
+        [ValidateTransaction]
         public long Id { get; set; }
         [Display(Name = "Acquirer Confirmation")]
         public bool? AcquirerConfirmation { get; set; }
