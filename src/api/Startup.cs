@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
+using System.IO;
 
 namespace api
 {
@@ -34,6 +35,9 @@ namespace api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v2", new Info { Title = "Anticipation", Version = "v2" });
+
+                var filePath = Path.Combine(System.AppContext.BaseDirectory, "api.xml");
+                c.IncludeXmlComments(filePath);
             });
         }
 
